@@ -1,71 +1,151 @@
 <!DOCTYPE html><html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ChatGPT Clone UI</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-      @keyframes colorCycle {
-        0% { color: #00f7ff; }
-        25% { color: #ff00ff; }
-        50% { color: #00ff88; }
-        75% { color: #ffd700; }
-        100% { color: #00f7ff; }
-      }
-      @keyframes glowCycle {
-        0% { box-shadow: 0 0 10px #00f7ff; }
-        25% { box-shadow: 0 0 10px #ff00ff; }
-        50% { box-shadow: 0 0 10px #00ff88; }
-        75% { box-shadow: 0 0 10px #ffd700; }
-        100% { box-shadow: 0 0 10px #00f7ff; }
-      }
-      .glow {
-        border: 2px solid #00f7ff;
-        animation: glowCycle 3s infinite;
-        transition: all 0.3s ease-in-out;
-      }
-      .glow:hover {
-        transform: scale(1.05);
-      }
-      .animated-title {
-        font-weight: bold;
-        font-size: 1.5rem;
-        animation: colorCycle 6s linear infinite;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-900 text-white min-h-screen flex flex-col">
-    <header class="p-4 flex justify-between items-center border-b border-gray-700">
-      <div class="animated-title">ChatGPT</div>
-      <div class="flex gap-3 items-center">
-        <button class="glow p-2 rounded-full">🔍</button>
-        <button class="glow p-2 rounded-full">💡</button>
-        <button class="glow p-2 rounded-full">🎤</button>
-        <button class="glow p-2 rounded-full">🖼️</button>
-      </div>
-    </header><main class="flex-1 p-4 overflow-auto">
-  <!-- Content will go here -->
-  <div id="chat-container" class="space-y-4"></div>
-</main>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatGPT Glowing UI</title>
+  <style>
+    :root {
+      --glow-colors: linear-gradient(270deg, #00ffff, #ff00ff, #00ff00, #ffff00);
+    }body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #222;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 
-<footer class="p-4 border-t border-gray-700 flex items-center gap-3 bg-gray-800">
-  <input id="chatInput" type="text" placeholder="Message ChatGPT..." class="flex-1 p-2 rounded glow bg-gray-700 text-white" />
-  <button onclick="handleSend()" class="glow px-4 py-2 rounded">➤</button>
-</footer>
+header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 16px;
+  text-align: center;
+  animation: glowText 5s infinite linear;
+}
 
-<script>
-  function handleSend() {
-    const input = document.getElementById("chatInput");
-    const container = document.getElementById("chat-container");
-    if (input.value.trim()) {
-      const bubble = document.createElement("div");
-      bubble.className = "p-3 bg-gray-700 rounded glow max-w-lg";
-      bubble.innerText = input.value;
-      container.appendChild(bubble);
-      input.value = "";
-    }
+@keyframes glowText {
+  0% {
+    color: #00ffff;
   }
-</script>
+  25% {
+    color: #ff00ff;
+  }
+  50% {
+    color: #00ff00;
+  }
+  75% {
+    color: #ffff00;
+  }
+  100% {
+    color: #00ffff;
+  }
+}
 
-  </body>
+.chat-container {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.input-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: #333;
+  border-radius: 20px 20px 0 0;
+  border-top: 3px solid transparent;
+  animation: borderGlow 3s infinite linear;
+}
+
+@keyframes borderGlow {
+  0% {
+    border-color: #00ffff;
+  }
+  25% {
+    border-color: #ff00ff;
+  }
+  50% {
+    border-color: #00ff00;
+  }
+  75% {
+    border-color: #ffff00;
+  }
+  100% {
+    border-color: #00ffff;
+  }
+}
+
+.input-bar input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #222;
+  color: white;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.buttons button {
+  border: none;
+  background-color: #111;
+  color: white;
+  padding: 8px 16px;
+  margin: 0 4px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.buttons button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--glow-colors);
+  background-size: 400% 400%;
+  animation: glowAnim 6s linear infinite;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+@keyframes glowAnim {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header>ChatGPT</header>
+  <div class="chat-container">
+    <!-- Chat content goes here -->
+  </div>
+  <div class="buttons">
+    <button>Search</button>
+    <button>Reason</button>
+    <button>Mic</button>
+  </div>
+  <div class="input-bar">
+    <input type="text" placeholder="Message ChatGPT" />
+  </div>
+</body>
 </html>
