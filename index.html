@@ -2,150 +2,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChatGPT Glowing UI</title>
+  <title>Glowing ChatGPT UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --glow-colors: linear-gradient(270deg, #00ffff, #ff00ff, #00ff00, #ffff00);
-    }body {
+      --glow-colors: #ff00ff, #00ffff, #00ff00, #ffff00, #ff6600, #ff0000;
+    }* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #222;
-  color: #fff;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #1e1e1e;
+  color: white;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-}
-
-header {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding: 16px;
-  text-align: center;
-  animation: glowText 5s infinite linear;
-}
-
-@keyframes glowText {
-  0% {
-    color: #00ffff;
-  }
-  25% {
-    color: #ff00ff;
-  }
-  50% {
-    color: #00ff00;
-  }
-  75% {
-    color: #ffff00;
-  }
-  100% {
-    color: #00ffff;
-  }
+  justify-content: flex-end;
 }
 
 .chat-container {
-  flex: 1;
   padding: 16px;
-  overflow-y: auto;
 }
 
-.input-bar {
+.chat-bar {
+  background-color: #2b2b2b;
+  border-radius: 20px;
   display: flex;
   align-items: center;
-  padding: 12px;
-  background-color: #333;
-  border-radius: 20px 20px 0 0;
-  border-top: 3px solid transparent;
-  animation: borderGlow 3s infinite linear;
-}
-
-@keyframes borderGlow {
-  0% {
-    border-color: #00ffff;
-  }
-  25% {
-    border-color: #ff00ff;
-  }
-  50% {
-    border-color: #00ff00;
-  }
-  75% {
-    border-color: #ffff00;
-  }
-  100% {
-    border-color: #00ffff;
-  }
-}
-
-.input-bar input {
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  background: #222;
-  color: white;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-}
-
-.buttons button {
-  border: none;
-  background-color: #111;
-  color: white;
-  padding: 8px 16px;
-  margin: 0 4px;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  cursor: pointer;
+  padding: 10px 15px;
   position: relative;
-  z-index: 1;
-  overflow: hidden;
+  animation: glow-border 6s linear infinite;
+  border: 2px solid transparent;
 }
 
-.buttons button::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: var(--glow-colors);
-  background-size: 400% 400%;
-  animation: glowAnim 6s linear infinite;
-  z-index: -1;
-  filter: blur(8px);
+.chat-bar.glow {
+  border-image: linear-gradient(90deg, var(--glow-colors)) 1;
+  border-image-slice: 1;
 }
 
-@keyframes glowAnim {
+@keyframes glow-border {
+  0% { border-image-source: linear-gradient(90deg, var(--glow-colors)); }
+  100% { border-image-source: linear-gradient(360deg, var(--glow-colors)); }
+}
+
+.chat-bar input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  padding: 5px 10px;
+}
+
+.chat-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button {
+  background-color: #3a3a3a;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.icon-button:hover {
+  background-color: #505050;
+}
+
+.shiny-text {
+  background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
   0% {
     background-position: 0% 50%;
   }
-  50% {
-    background-position: 100% 50%;
-  }
   100% {
-    background-position: 0% 50%;
+    background-position: 200% 50%;
   }
 }
 
   </style>
 </head>
 <body>
-  <header>ChatGPT</header>
   <div class="chat-container">
-    <!-- Chat content goes here -->
-  </div>
-  <div class="buttons">
-    <button>Search</button>
-    <button>Reason</button>
-    <button>Mic</button>
-  </div>
-  <div class="input-bar">
-    <input type="text" placeholder="Message ChatGPT" />
-  </div>
-</body>
+    <div class="chat-bar glow" id="chatBar">
+      <div class="chat-icons">
+        <div class="icon-button" title="Image"><img src="assets/icons/image.svg" width="20" /></div>
+        <div class="icon-button" title="Search"><img src="assets/icons/search.svg" width="20" /></div>
+        <div class="icon-button" title="Reason"><img src="assets/icons/reason.svg" width="20" /></div>
+        <div class="icon-button" title="Mic"><img src="assets/icons/mic.svg" width="20" /></div>
+      </div>
+      <input type="text" id="chatInput" placeholder="Message ChatGPT" />
+      <div class="icon-button" title="Send"><img src="assets/icons/send.svg" width="20" /></div>
+    </div>
+  </div>  <script>
+    const chatInput = document.getElementById('chatInput');
+    const chatBar = document.getElementById('chatBar');
+
+    const keywords = ["image", "draw", "generate", "create image"];
+
+    chatInput.addEventListener("input", () => {
+      const text = chatInput.value.toLowerCase();
+      const hasKeyword = keywords.some(word => text.includes(word));
+      chatInput.classList.toggle("shiny-text", hasKeyword);
+    });
+  </script></body>
 </html>
